@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Ajax Json || CTG-52 </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
+        <style>
+
+            body{
+                padding: 0;
+                margin: 0;
+            }
+            section{
+                background:url(bg-.jpeg);
+                background-repeat: no-repeat;
+                background-size: cover;
+                height: 100vh;
+                position: relative;
+            }
+            #wbox{
+                width: 400px;
+                height:300px;
+                padding:15px 0px 10px 0px;
+                text-align: center;
+                background:rgba(224, 224, 224, 0.55);
+                position: absolute;
+                left:50%;
+                top: 50%;
+                transform: translate(-50%,-50%); 
+            }
+            #wbox h2{
+                color: #2C436F;
+
+
+            }
+        </style>
+    </head>
+    <body>
+        <section>
+            <div id="wbox">
+                <h2 id="city">City</h2>
+                <h1 id="country" class="text-primary">Country</h1>
+                <h3 id="cn"></h3>
+                <h3 style="color:darkblue;"><span id="temp">00</span> <sup>0</sup> C</h3>
+                <h4 style="color: black;" id="lt"></h4>
+
+                <input type="text" id="scanf">
+                <button type="button" class="btn-danger" id="btn">Click</button>
+            </div>
+        </section>
+
+
+
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            $("#btn").click(function () {
+                var cityname = $("#scanf").val();
+
+                getValue(cityname);
+
+            });
+            function getValue(cityname) {
+                $.ajax({
+                    url: "http://api.apixu.com/v1/current.json?key=6cc0d54fdf2745d9b79154527171404&q=" + cityname,
+                    dataType: "json",
+                    success: function (data) {
+                        $("#city").text(data.location.name);
+                        $("#country").text(data.location.country);
+                        $("#temp").text("Temperature : " + data.current.temp_c);
+                        $("#lt").text("Local Time : " + data.location.localtime);
+                        $("#cn").text("Condition : " + data.current.condition.text);
+
+
+
+                    },
+                    error: function () {
+                        alert("Invalid input ! Please Enter correct City");
+                    }
+
+                });
+            }
+            ;
+
+        </script>
+    </body>
+</html>
